@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hifl-databricks"
+version = "0.1.0"
+description = "Hypercare Incident Feedback Loop (HIFL): turn post-go-live incidents into data quality controls on Databricks / PySpark"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Jagan Ankam" }]
+requires-python = ">=3.10"
+keywords = ["data quality", "DataOps", "hypercare", "databricks", "pyspark", "SAP S/4HANA", "regression testing"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Database",
+]
+# PySpark is provided by the Databricks runtime, so it is not a hard dependency.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pyspark>=3.5,<4.1", "pytest>=7"]
+
+[project.scripts]
+hifl-run = "hifl.pipeline:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+filterwarnings = ["ignore::DeprecationWarning", "ignore::FutureWarning"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"

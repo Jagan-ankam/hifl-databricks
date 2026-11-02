@@ -1,0 +1,91 @@
+[
+  {
+    "control_template": "mapping_reconciliation",
+    "business_object": "REASON_CODE",
+    "check_type": "mapping_coverage",
+    "severity": "HIGH",
+    "description": "Every legacy reason code must have an S/4HANA mapping",
+    "params": {
+      "source_table": "${schema_fqn}.demo_legacy_orders",
+      "source_column": "reason_code",
+      "mapping_table": "${schema_fqn}.demo_reason_code_map",
+      "mapping_column": "legacy_code"
+    }
+  },
+  {
+    "control_template": "master_data_validation",
+    "business_object": "SUPPLIER",
+    "check_type": "referential_integrity",
+    "severity": "HIGH",
+    "description": "Every supplier location must reference an existing supplier",
+    "params": {
+      "table": "${schema_fqn}.demo_s4_supplier_locations",
+      "column": "supplier_id",
+      "ref_table": "${schema_fqn}.demo_s4_suppliers",
+      "ref_column": "supplier_id"
+    }
+  },
+  {
+    "control_template": "master_data_validation",
+    "business_object": "MATERIAL",
+    "check_type": "unique",
+    "severity": "HIGH",
+    "description": "Material numbers must be unique in S/4HANA",
+    "params": {
+      "table": "${schema_fqn}.demo_s4_materials",
+      "columns": [
+        "material_id"
+      ]
+    }
+  },
+  {
+    "control_template": "record_count_reconciliation",
+    "business_object": "MO_FILE",
+    "check_type": "row_count_reconciliation",
+    "severity": "HIGH",
+    "description": "Manufacturing order files must contain every source record",
+    "params": {
+      "source_table": "${schema_fqn}.demo_source_mo_files",
+      "target_table": "${schema_fqn}.demo_target_mo_files",
+      "tolerance_pct": 0
+    }
+  },
+  {
+    "control_template": "rule_regression_test",
+    "business_object": "PAYMENT",
+    "check_type": "expression",
+    "severity": "CRITICAL",
+    "description": "Proof pay flag must be Y or N on every payment",
+    "params": {
+      "table": "${schema_fqn}.demo_payments",
+      "condition": "proof_pay_flag IN ('Y', 'N')"
+    }
+  },
+  {
+    "control_template": "interface_monitoring",
+    "business_object": "INVOICE_IDOC",
+    "check_type": "control_total",
+    "severity": "HIGH",
+    "description": "Invoice amounts sent and received through the interface must match",
+    "params": {
+      "source_table": "${schema_fqn}.demo_source_invoices",
+      "target_table": "${schema_fqn}.demo_target_invoices",
+      "column": "amount",
+      "tolerance_abs": 0.01
+    }
+  },
+  {
+    "control_template": "source_profiling",
+    "business_object": "*",
+    "check_type": "not_null",
+    "severity": "MEDIUM",
+    "description": "Legacy materials must carry a base unit of measure before load",
+    "params": {
+      "table": "${schema_fqn}.demo_legacy_materials",
+      "columns": [
+        "material_id",
+        "base_uom"
+      ]
+    }
+  }
+]

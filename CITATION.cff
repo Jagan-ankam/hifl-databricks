@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the accompanying paper."
+title: "HIFL for Databricks: Hypercare Incident Feedback Loop reference implementation"
+type: software
+version: 0.1.0
+license: MIT
+authors:
+  - family-names: Ankam
+    given-names: Jagan
+keywords:
+  - data quality
+  - DataOps
+  - hypercare
+  - SAP S/4HANA
+  - Databricks
+  - PySpark
+preferred-citation:
+  type: article
+  title: "The Hypercare Incident Feedback Loop: A Case Study Framework for Turning Post-Go-Live Incidents into Data Quality Controls in SAP S/4HANA Programs"
+  authors:
+    - family-names: Ankam
+      given-names: Jagan
+  status: submitted

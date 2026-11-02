@@ -1,0 +1,72 @@
+# Databricks Asset Bundle for HIFL.
+#
+#   databricks bundle validate
+#   databricks bundle deploy -t dev
+#   databricks bundle run hifl_pipeline -t dev
+#
+# The tasks below do not declare compute, so they run on serverless jobs compute.
+# If serverless is not enabled in your workspace, add `existing_cluster_id: <id>`
+# (or a `job_cluster_key`) to each task. Use Databricks Runtime 14.3 LTS or later.
+
+bundle:
+  name: hifl-databricks
+
+variables:
+  catalog:
+    description: Unity Catalog that holds the HIFL schema (use an empty string for the default catalog)
+    default: main
+  schema:
+    description: Schema for all HIFL tables
+    default: hifl
+  release_id:
+    description: Release label recorded with the regression (IBRT) results
+    default: R3-demo
+  load_demo_data:
+    description: Load the synthetic demo tables ("true" / "false")
+    default: "true"
+  fail_on_gate:
+    description: Fail the job when the release gate fails ("true" / "false")
+    default: "false"
+
+resources:
+  jobs:
+    hifl_pipeline:
+      name: "HIFL pipeline (${bundle.target})"
+      max_concurrent_runs: 1
+      tasks:
+        - task_key: setup
+          notebook_task:
+            notebook_path: ./notebooks/00_setup.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+              load_demo_data: ${var.load_demo_data}
+
+        - task_key: run_hifl
+          depends_on:
+            - task_key: setup
+          notebook_task:
+            notebook_path: ./notebooks/01_run_hifl_pipeline.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+              release_id: ${var.release_id}
+              fail_on_gate: ${var.fail_on_gate}
+
+    hifl_release_gate:
+      name: "HIFL release gate (${bundle.target})"
+      max_concurrent_runs: 1
+      tasks:
+        - task_key: release_gate
+          notebook_task:
+            notebook_path: ./notebooks/02_release_gate_ibrt.py
+            base_parameters:
+              catalog: ${var.catalog}
+              schema: ${var.schema}
+              release_id: ${var.release_id}
+              fail_on_gate: "true"
+
+targets:
+  dev:
+    mode: development
+    default: true

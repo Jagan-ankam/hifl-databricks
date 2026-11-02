@@ -1,0 +1,78 @@
+{
+  "MAPPING": [
+    "mapping",
+    "mapped",
+    "unmapped",
+    "map table",
+    "cross reference",
+    "xref",
+    "conversion rule",
+    "value translation",
+    "reason code",
+    "code mismatch",
+    "lookup"
+  ],
+  "MASTER_DATA": [
+    "master data",
+    "supplier",
+    "vendor",
+    "customer master",
+    "material master",
+    "business partner",
+    "duplicate record",
+    "plant",
+    "supplier location",
+    "golden record"
+  ],
+  "COMPLETENESS": [
+    "missing records",
+    "missing rows",
+    "record count",
+    "row count",
+    "not loaded",
+    "incomplete",
+    "dropped",
+    "truncated",
+    "partial load",
+    "missing file",
+    "files missing"
+  ],
+  "BUSINESS_LOGIC": [
+    "business rule",
+    "calculation",
+    "logic",
+    "flag",
+    "derivation",
+    "incorrect value",
+    "wrong amount",
+    "pricing",
+    "tax",
+    "rounding",
+    "condition"
+  ],
+  "INTEGRATION": [
+    "interface",
+    "idoc",
+    "api",
+    "timeout",
+    "middleware",
+    "queue",
+    "batch job failed",
+    "connection",
+    "sync",
+    "replication",
+    "message",
+    "integration"
+  ],
+  "SOURCE_SYSTEM": [
+    "legacy",
+    "source system",
+    "source data",
+    "data entry",
+    "upstream",
+    "bad source",
+    "invalid source",
+    "garbage",
+    "historical data"
+  ]
+}

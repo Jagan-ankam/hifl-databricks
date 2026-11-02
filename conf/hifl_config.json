@@ -1,0 +1,63 @@
+{
+  "_comment": "HIFL run configuration. Relative paths are resolved against the repository root. ${schema_fqn} is replaced with the target catalog.schema.",
+  "hifl": {
+    "catalog": "main",
+    "schema": "hifl",
+    "table_format": "delta",
+    "table_prefix": "hifl_",
+    "closed_statuses": [
+      "RESOLVED",
+      "CLOSED",
+      "DONE"
+    ],
+    "gate_fail_severities": [
+      "CRITICAL",
+      "HIGH"
+    ]
+  },
+  "release_id": "R3-demo",
+  "run_validation": true,
+  "classification_rules_path": "conf/classification_rules.json",
+  "control_bindings_path": "conf/control_bindings.json",
+  "sources": [
+    {
+      "name": "ServiceNow",
+      "local_csv": "sample_data/servicenow_incidents.csv",
+      "column_map": {
+        "source_record_id": "number",
+        "title": "short_description",
+        "description": "description",
+        "release_cycle": "u_release",
+        "priority": "priority",
+        "status": "state",
+        "opened_at": "opened_at",
+        "resolved_at": "resolved_at",
+        "business_object": "u_business_object",
+        "assignment_group": "assignment_group",
+        "root_cause_text": "u_root_cause",
+        "resolution_text": "close_notes",
+        "manual_category": "u_hifl_category"
+      }
+    },
+    {
+      "name": "Jira",
+      "local_csv": "sample_data/jira_issues.csv",
+      "column_map": {
+        "source_record_id": "key",
+        "title": "summary",
+        "description": "description",
+        "release_cycle": "fix_version",
+        "priority": "priority",
+        "status": "status",
+        "opened_at": "created",
+        "resolved_at": "resolution_date",
+        "business_object": "component",
+        "root_cause_text": "root_cause",
+        "resolution_text": "resolution"
+      },
+      "defaults": {
+        "assignment_group": "Hypercare Jira Board"
+      }
+    }
+  ]
+}
