@@ -16,7 +16,7 @@
 
 # COMMAND ----------
 
-dbutils.widgets.text("catalog", "main", "Catalog (blank = default)")
+dbutils.widgets.text("catalog", "", "Catalog (blank = default)")
 dbutils.widgets.text("schema", "hifl", "Schema")
 dbutils.widgets.text("config_path", "conf/hifl_config.json", "Run config (relative to repo root)")
 dbutils.widgets.text("release_id", "R3-demo", "Release being validated")

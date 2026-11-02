@@ -13,8 +13,8 @@ bundle:
 
 variables:
   catalog:
-    description: Unity Catalog that holds the HIFL schema (use an empty string for the default catalog)
-    default: main
+    description: Unity Catalog that holds the HIFL schema (empty = the workspace default catalog)
+    default: ""
   schema:
     description: Schema for all HIFL tables
     default: hifl

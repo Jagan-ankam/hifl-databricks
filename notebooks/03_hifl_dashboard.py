@@ -7,7 +7,7 @@
 
 # COMMAND ----------
 
-dbutils.widgets.text("catalog", "main", "Catalog (blank = default)")
+dbutils.widgets.text("catalog", "", "Catalog (blank = default)")
 dbutils.widgets.text("schema", "hifl", "Schema")
 
 # COMMAND ----------
@@ -44,7 +44,41 @@ display(spark.table(t("metrics")))
 
 # COMMAND ----------
 
-display(spark.table(t("release_distribution")))
+release = spark.table(t("release_distribution")).orderBy("release_cycle")
+display(release)
+
+# COMMAND ----------
+
+# MAGIC %md ### Chart: quality events by release cycle
+# MAGIC Blue bars are hypercare cycles, orange is UAT. You can also click **+ > Visualization > Bar** on the table above.
+
+# COMMAND ----------
+
+try:
+    import matplotlib.pyplot as plt
+except ImportError:  # matplotlib ships with Databricks runtimes; this is only a safeguard
+    plt = None
+    print("matplotlib is not available - use + > Visualization > Bar on the table above.")
+
+if plt is not None:
+    rows = release.collect()
+    labels = [r["release_cycle"].replace(" ", "\n", 1) for r in rows]
+    counts = [int(r["events"]) for r in rows]
+    shares = [float(r["share_pct"]) for r in rows]
+    colors = ["#2a78d6" if r["phase"] == "HYPERCARE" else "#eb6834" for r in rows]
+
+    fig, ax = plt.subplots(figsize=(7, 4.2))
+    bars = ax.bar(labels, counts, color=colors, width=0.6, zorder=3)
+    for bar, n, pct in zip(bars, counts, shares, strict=True):
+        ax.text(bar.get_x() + bar.get_width() / 2, n + 0.5, f"{n} ({pct}%)", ha="center", va="bottom", fontweight="bold")
+    ax.set_ylabel("Number of quality events")
+    ax.set_title("Quality events by release cycle")
+    ax.set_ylim(0, max(counts) * 1.2 if counts else 1)
+    ax.grid(axis="y", color="#e4e3dd", zorder=0)
+    for side in ("top", "right"):
+        ax.spines[side].set_visible(False)
+    fig.tight_layout()
+    plt.show()
 
 # COMMAND ----------
 

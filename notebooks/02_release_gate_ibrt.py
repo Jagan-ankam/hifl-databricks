@@ -9,7 +9,7 @@
 
 # COMMAND ----------
 
-dbutils.widgets.text("catalog", "main", "Catalog (blank = default)")
+dbutils.widgets.text("catalog", "", "Catalog (blank = default)")
 dbutils.widgets.text("schema", "hifl", "Schema")
 dbutils.widgets.text("release_id", "R4", "Release being validated")
 dbutils.widgets.text("blocking_severities", "CRITICAL,HIGH", "Blocking severities")

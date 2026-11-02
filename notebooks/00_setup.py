@@ -7,13 +7,13 @@
 # MAGIC
 # MAGIC | Widget | Meaning |
 # MAGIC |---|---|
-# MAGIC | `catalog` | Unity Catalog name. Leave blank to use the workspace default catalog / `hive_metastore`. |
+# MAGIC | `catalog` | Unity Catalog name. Leave blank to use the workspace default catalog (`workspace` on Databricks Free Edition). |
 # MAGIC | `schema` | Schema that will hold every HIFL table. |
 # MAGIC | `load_demo_data` | `true` loads the demo tables (`demo_*`). Use `false` with your own data. |
 
 # COMMAND ----------
 
-dbutils.widgets.text("catalog", "main", "Catalog (blank = default)")
+dbutils.widgets.text("catalog", "", "Catalog (blank = default)")
 dbutils.widgets.text("schema", "hifl", "Schema")
 dbutils.widgets.dropdown("load_demo_data", "true", ["true", "false"], "Load demo tables")
 dbutils.widgets.dropdown("table_format", "delta", ["delta", "parquet"], "Table format")

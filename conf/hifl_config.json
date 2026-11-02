@@ -1,7 +1,7 @@
 {
   "_comment": "HIFL run configuration. Relative paths are resolved against the repository root. ${schema_fqn} is replaced with the target catalog.schema.",
   "hifl": {
-    "catalog": "main",
+    "catalog": null,
     "schema": "hifl",
     "table_format": "delta",
     "table_prefix": "hifl_",

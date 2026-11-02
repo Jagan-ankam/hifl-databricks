@@ -60,9 +60,9 @@ No extra libraries are needed: HIFL uses only PySpark and the Python standard li
 ## Quick start A: Databricks Git folder (about 5 minutes)
 
 1. In Databricks, go to **Workspace -> Create -> Git folder** and paste this repository's URL.
-2. Open `notebooks/00_setup`, set the `catalog` and `schema` widgets, attach compute and **Run all**. This creates the schema and loads the synthetic demo tables.
-3. Open `notebooks/01_run_hifl_pipeline` with the same widgets and **Run all**.
-4. Open `notebooks/03_hifl_dashboard` to explore the results.
+2. Open `notebooks/00_setup`, attach **Serverless** compute (not a SQL warehouse) and **Run all**. This creates the schema and loads the synthetic demo tables. The `catalog` widget is blank by default, which means the workspace's default catalog (`workspace` on Databricks Free Edition); type a catalog name to use another one.
+3. Open `notebooks/01_run_hifl_pipeline` and **Run all** (use the same `catalog` and `schema` values if you changed them).
+4. Open `notebooks/03_hifl_dashboard` and **Run all** to explore the results, including a bar chart of events per release cycle.
 
 With the shipped demo data you should see 64 distinct quality events (35 in R1 hypercare, 11 in R2C1 hypercare, 18 in R2C2/R5 UAT, so a hypercare discovery rate of 71.9%), 3 cross-channel duplicates, 7 controls in the library, and a release gate that **fails on purpose**. Two blocking controls catch problems planted in the demo data: an unmapped reason code and an orphan supplier location.
 
